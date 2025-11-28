@@ -1,0 +1,4 @@
+[tool.poetry]
+name = "clear-quartz"
+version = "0.1.0"
+description = "Precog Sandbox Gem"

@@ -1,0 +1,1 @@
+# GET /citrine/context endpoint
