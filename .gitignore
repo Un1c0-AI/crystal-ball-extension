@@ -1,0 +1,32 @@
+node_modules/
+out/
+dist/
+*.vsix
+.vscode-test/
+*.log
+
+# Python
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Models
+models/*.gguf
+models/*.bin
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db

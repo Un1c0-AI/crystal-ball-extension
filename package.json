@@ -1,0 +1,125 @@
+{
+  "name": "crystal-ball-ai",
+  "displayName": "Crystal Ball AI",
+  "description": "The precognitive, self-evolving, 100% private coding oracle",
+  "version": "0.1.0",
+  "publisher": "Un1c0-AI",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Programming Languages",
+    "Testing"
+  ],
+  "keywords": [
+    "ai",
+    "llm",
+    "local",
+    "deepseek",
+    "sandbox",
+    "testing"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "crystal-ball-ai",
+          "title": "Crystal Ball AI",
+          "icon": "media/crystal-ball.svg"
+        }
+      ]
+    },
+    "views": {
+      "crystal-ball-ai": [
+        {
+          "id": "crystalBallChat",
+          "name": "Chat",
+          "type": "webview"
+        },
+        {
+          "id": "crystalBallStatus",
+          "name": "Status",
+          "type": "tree"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "crystalBall.precog",
+        "title": "Crystal Ball: Show Predictions",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "crystalBall.sandbox",
+        "title": "Crystal Ball: Run Sandbox Test",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "crystalBall.try",
+        "title": "Crystal Ball: Try Feature (with proof)"
+      },
+      {
+        "command": "crystalBall.evolve",
+        "title": "Crystal Ball: Evolve (Retrain)"
+      }
+    ],
+    "configuration": {
+      "title": "Crystal Ball AI",
+      "properties": {
+        "crystalBall.backendUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:8000",
+          "description": "Backend gateway URL"
+        },
+        "crystalBall.localModel": {
+          "type": "string",
+          "default": "deepseek-r1:8b",
+          "description": "Local Ollama model name"
+        },
+        "crystalBall.ollamaUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:11434",
+          "description": "Ollama server URL"
+        },
+        "crystalBall.enableSandbox": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Precog Sandbox (requires git)"
+        },
+        "crystalBall.enableMemory": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Qdrant memory (requires Docker)"
+        },
+        "crystalBall.enableEvolution": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable self-evolving LoRA training"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
+}
