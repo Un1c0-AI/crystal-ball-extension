@@ -1,5 +1,5 @@
 ﻿import * as vscode from 'vscode';
-import { ChatViewProvider } from './views/chatViewProvider';
+import { ChatViewProvider } from './chatViewProvider';
 import { StatusTreeProvider } from './views/statusTreeProvider';
 import { ModuleManager } from './core/moduleManager';
 import { gem } from './gemClient';
@@ -12,9 +12,9 @@ import { registerTryCommand } from './commands/try';
     await modules.initialize();
 
     // Register chat view
-    const chatProvider = new ChatViewProvider(context.extensionUri, modules);
+    const chatProvider = new ChatViewProvider(context.extensionUri);
     context.subscriptions.push(
-        vscode.window.registerWebviewViewProvider('crystalBallChat', chatProvider)
+        vscode.window.registerWebviewViewProvider(ChatViewProvider.viewType, chatProvider)
     );
 
     // Register status tree

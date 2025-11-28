@@ -48,6 +48,13 @@
           "name": "Status",
           "type": "tree"
         }
+      ],
+      "explorer": [
+        {
+          "id": "crystalBall.chat",
+          "name": "Crystal Ball AI",
+          "type": "webview"
+        }
       ]
     },
     "commands": [
