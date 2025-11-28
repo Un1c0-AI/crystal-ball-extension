@@ -1,4 +1,11 @@
+
 [tool.poetry]
-name = "clear-quartz"
+name = "crystal-ball-clear-quartz"
 version = "0.1.0"
 description = "Precog Sandbox Gem"
+
+[tool.poetry.dependencies]
+python = ">=3.11"
+
+[tool.poetry.dev-dependencies]
+pytest = ">=8.0"
