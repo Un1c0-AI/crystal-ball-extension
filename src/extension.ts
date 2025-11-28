@@ -2,8 +2,9 @@
 import { ChatViewProvider } from './views/chatViewProvider';
 import { StatusTreeProvider } from './views/statusTreeProvider';
 import { ModuleManager } from './core/moduleManager';
+import { gem } from './gemClient';
+import { registerTryCommand } from './commands/try';
 
-export async function activate(context: vscode.ExtensionContext) {
     console.log('🔮 Crystal Ball AI activating...');
 
     // Initialize module manager (handles graceful degradation)
@@ -42,25 +43,25 @@ export async function activate(context: vscode.ExtensionContext) {
             vscode.window.showInformationMessage('Sandbox test coming soon...');
         }),
 
-        vscode.commands.registerCommand('crystalBall.try', async () => {
-            const input = await vscode.window.showInputBox({
-                prompt: 'What feature should I build and prove?',
-                placeHolder: 'e.g., Add user authentication'
-            });
-            if (input) {
-                chatProvider.handleTryCommand(input);
-            }
-        }),
-
-        vscode.commands.registerCommand('crystalBall.evolve', async () => {
-            if (!modules.isModuleEnabled('evolution')) {
-                vscode.window.showWarningMessage('Evolution module is disabled');
+        vscode.commands.registerCommand('crystalBall.testSandbox', async () => {
+            if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
+                vscode.window.showWarningMessage('No workspace folder open');
                 return;
             }
-            // TODO: Trigger LoRA retraining
-            vscode.window.showInformationMessage('Evolution training coming soon...');
-        })
+            const result = await gem.post('/clear-quartz/run', {
+                repo_path: vscode.workspace.workspaceFolders[0].uri.fsPath
+            });
+            vscode.window.showInformationMessage(
+                result.passed ? `All tests passed in ${result.test_result.duration_sec}s` : 'Tests failed – see output'
+            );
+        }),
+        vscode.window.showInformationMessage('Evolution training coming soon...');
     );
+
+    // Register the legendary Try command
+    registerTryCommand(context);
+    vscode.commands.executeCommand('setContext', 'crystalBall.ready', true);
+}
 
     console.log('✅ Crystal Ball AI is active');
 }

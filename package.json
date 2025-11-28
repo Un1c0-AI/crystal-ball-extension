@@ -21,7 +21,9 @@
     "testing"
   ],
   "activationEvents": [
-    "onStartupFinished"
+    "onStartupFinished",
+    "onCommand:crystalBall.try",
+    "onCommand:crystalBall.precog"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -61,7 +63,8 @@
       },
       {
         "command": "crystalBall.try",
-        "title": "Crystal Ball: Try Feature (with proof)"
+        "title": "Crystal Ball: Try",
+        "category": "Crystal Ball"
       },
       {
         "command": "crystalBall.evolve",

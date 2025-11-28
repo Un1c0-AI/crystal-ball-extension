@@ -43,8 +43,21 @@ async def autonomous_run(req: RunRequest, background_tasks: BackgroundTasks):
 	background_tasks.add_task(run_agent, initial_state)
 	return {"status": "started", "objective": req.objective}
 
+# POST /selenite/run endpoint
+
+_active_tasks: dict[str, AgentState] = {}
+
 async def run_agent(state: AgentState):
+	_active_tasks[state["objective"]] = state
 	result = await app.ainvoke(state)
+	_active_tasks[state["objective"]] = result
 	print("AUTONOMOUS AGENT FINISHED:", result["status"])
 	print("Final diff:\n", result["code_diff"])
+
+@router.post("/status")
+async def status(request: RunRequest):
+	state = _active_tasks.get(request.objective)
+	if state:
+		return state
+	return {"status": "idle"}
 # POST /selenite/run endpoint
